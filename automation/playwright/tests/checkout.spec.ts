@@ -1,28 +1,22 @@
-import { test } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
+import { test } from '../fixtures/testFixtures';
 import { users } from '../test-data/users';
 import { checkoutData } from '../test-data/checkoutData';
 
 test.describe('Checkout Tests', () => {
-  let loginPage: LoginPage;
-  let inventoryPage: InventoryPage;
-  let cartPage: CartPage;
-  let checkoutPage: CheckoutPage;
 
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
-    cartPage = new CartPage(page);
-    checkoutPage = new CheckoutPage(page);
-
+  test.beforeEach(async ({
+    loginPage,
+    inventoryPage,
+    cartPage,
+    checkoutPage
+  }) => {
     await loginPage.goto();
+
     await loginPage.login(
-  users.standard.username,
-  users.standard.password
-);
+      users.standard.username,
+      users.standard.password
+    );
+
     await inventoryPage.expectLoaded();
 
     await inventoryPage.addBackpackToCart();
@@ -34,15 +28,18 @@ test.describe('Checkout Tests', () => {
     await cartPage.expectBackpackVisible();
 
     await cartPage.startCheckout();
+
     await checkoutPage.expectInformationPage();
   });
 
-  test('user can complete checkout successfully', async () => {
+  test('user can complete checkout successfully', async ({
+    checkoutPage
+  }) => {
     await checkoutPage.fillCustomerInformation(
-  checkoutData.validCustomer.firstName,
-  checkoutData.validCustomer.lastName,
-  checkoutData.validCustomer.postalCode
-);
+      checkoutData.validCustomer.firstName,
+      checkoutData.validCustomer.lastName,
+      checkoutData.validCustomer.postalCode
+    );
 
     await checkoutPage.continueCheckout();
 
@@ -54,12 +51,14 @@ test.describe('Checkout Tests', () => {
     await checkoutPage.expectOrderComplete();
   });
 
-  test('checkout fails when postal code is missing', async () => {
+  test('checkout fails when postal code is missing', async ({
+    checkoutPage
+  }) => {
     await checkoutPage.fillCustomerInformation(
-  checkoutData.validCustomer.firstName,
-  checkoutData.validCustomer.lastName,
-  ''
-);
+      checkoutData.validCustomer.firstName,
+      checkoutData.validCustomer.lastName,
+      ''
+    );
 
     await checkoutPage.continueCheckout();
 
@@ -69,4 +68,5 @@ test.describe('Checkout Tests', () => {
 
     await checkoutPage.expectInformationPage();
   });
+
 });

@@ -1,28 +1,26 @@
-import { test } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
+import { test } from '../fixtures/testFixtures';
 import { users } from '../test-data/users';
 
 test.describe('Inventory and Shopping Cart Tests', () => {
-  let loginPage: LoginPage;
-  let inventoryPage: InventoryPage;
-  let cartPage: CartPage;
 
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
-    cartPage = new CartPage(page);
-
+  test.beforeEach(async ({
+    loginPage,
+    inventoryPage
+  }) => {
     await loginPage.goto();
+
     await loginPage.login(
-  users.standard.username,
-  users.standard.password
-);
+      users.standard.username,
+      users.standard.password
+    );
+
     await inventoryPage.expectLoaded();
   });
 
-  test('user can add a product to the cart', async () => {
+  test('user can add a product to the cart', async ({
+    inventoryPage,
+    cartPage
+  }) => {
     await inventoryPage.addBackpackToCart();
 
     await inventoryPage.expectCartCount('1');
@@ -33,7 +31,9 @@ test.describe('Inventory and Shopping Cart Tests', () => {
     await cartPage.expectBackpackVisible();
   });
 
-  test('user can remove a product from the cart', async () => {
+  test('user can remove a product from the cart', async ({
+    inventoryPage
+  }) => {
     await inventoryPage.addBackpackToCart();
 
     await inventoryPage.expectCartCount('1');
@@ -42,4 +42,5 @@ test.describe('Inventory and Shopping Cart Tests', () => {
 
     await inventoryPage.expectCartEmpty();
   });
+
 });
