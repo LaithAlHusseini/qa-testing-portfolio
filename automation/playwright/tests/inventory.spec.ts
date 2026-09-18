@@ -2,6 +2,7 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
+import { users } from '../test-data/users';
 
 test.describe('Inventory and Shopping Cart Tests', () => {
   let loginPage: LoginPage;
@@ -14,7 +15,10 @@ test.describe('Inventory and Shopping Cart Tests', () => {
     cartPage = new CartPage(page);
 
     await loginPage.goto();
-    await loginPage.login('standard_user', 'secret_sauce');
+    await loginPage.login(
+  users.standard.username,
+  users.standard.password
+);
     await inventoryPage.expectLoaded();
   });
 

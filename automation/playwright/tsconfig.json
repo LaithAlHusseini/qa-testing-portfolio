@@ -10,8 +10,9 @@
     "types": ["node", "@playwright/test"]
   },
   "include": [
-    "tests/**/*.ts",
-    "pages/**/*.ts",
-    "playwright.config.ts"
-  ]
+  "tests/**/*.ts",
+  "pages/**/*.ts",
+  "test-data/**/*.ts",
+  "playwright.config.ts"
+]
 }

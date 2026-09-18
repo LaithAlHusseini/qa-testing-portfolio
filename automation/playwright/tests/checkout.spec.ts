@@ -3,6 +3,8 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
+import { users } from '../test-data/users';
+import { checkoutData } from '../test-data/checkoutData';
 
 test.describe('Checkout Tests', () => {
   let loginPage: LoginPage;
@@ -17,7 +19,10 @@ test.describe('Checkout Tests', () => {
     checkoutPage = new CheckoutPage(page);
 
     await loginPage.goto();
-    await loginPage.login('standard_user', 'secret_sauce');
+    await loginPage.login(
+  users.standard.username,
+  users.standard.password
+);
     await inventoryPage.expectLoaded();
 
     await inventoryPage.addBackpackToCart();
@@ -34,10 +39,10 @@ test.describe('Checkout Tests', () => {
 
   test('user can complete checkout successfully', async () => {
     await checkoutPage.fillCustomerInformation(
-      'Laith',
-      'Al-Husseini',
-      '11118'
-    );
+  checkoutData.validCustomer.firstName,
+  checkoutData.validCustomer.lastName,
+  checkoutData.validCustomer.postalCode
+);
 
     await checkoutPage.continueCheckout();
 
@@ -51,10 +56,10 @@ test.describe('Checkout Tests', () => {
 
   test('checkout fails when postal code is missing', async () => {
     await checkoutPage.fillCustomerInformation(
-      'Laith',
-      'Al-Husseini',
-      ''
-    );
+  checkoutData.validCustomer.firstName,
+  checkoutData.validCustomer.lastName,
+  ''
+);
 
     await checkoutPage.continueCheckout();
 
