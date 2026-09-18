@@ -4,6 +4,26 @@
 
 A practical software quality assurance portfolio demonstrating manual testing, test design, defect reporting, API testing, and test automation.
 
+## Portfolio Highlights
+
+- Manual test scenarios and detailed test cases
+- Structured defect reports with severity and priority
+- REST API testing using Postman
+- Automated API response validations
+- End-to-end UI automation using Playwright and TypeScript
+- Cross-browser testing on Chromium, Firefox, and WebKit
+- 21 automated Playwright test executions across 3 browsers
+- Continuous Integration using GitHub Actions
+- Automated Playwright HTML report generation
+
+## Repository Structure
+
+- [`manual-testing/`](./manual-testing/) — Test scenarios and test cases
+- [`bug-reports/`](./bug-reports/) — Structured defect reports
+- [`api-testing/`](./api-testing/) — API testing documentation and Postman collection
+- [`automation/playwright/`](./automation/playwright/) — Playwright UI automation tests
+- [`.github/workflows/`](./.github/workflows/) — CI workflow configuration
+
 ## Objectives
 
 This repository documents my hands-on learning and practice in Software Quality Assurance.
