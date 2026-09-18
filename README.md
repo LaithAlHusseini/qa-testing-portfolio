@@ -1,5 +1,7 @@
 # QA Testing Portfolio
 
+[![Playwright Tests](https://github.com/LaithAlHusseini/qa-testing-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/LaithAlHusseini/qa-testing-portfolio/actions/workflows/playwright.yml)
+
 A practical software quality assurance portfolio demonstrating manual testing, test design, defect reporting, API testing, and test automation.
 
 ## Objectives
