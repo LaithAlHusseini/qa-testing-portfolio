@@ -45,7 +45,7 @@ It focuses on applying testing principles to realistic software scenarios rather
 
 ## Tools
 
-The portfolio will progressively include:
+The portfolio currently uses:
 
 - Postman
 - Playwright
@@ -53,6 +53,12 @@ The portfolio will progressively include:
 - GitHub Actions
 
 ## Repository Structure
+
+- [`manual-testing/`](./manual-testing/) — Test scenarios and test cases
+- [`bug-reports/`](./bug-reports/) — Structured defect reports
+- [`api-testing/`](./api-testing/) — API testing documentation and Postman collection
+- [`automation/playwright/`](./automation/playwright/) — Playwright UI automation tests
+- [`.github/workflows/`](./.github/workflows/) — CI workflow configuration
 
 ### Manual Testing
 Test scenarios, test cases, and exploratory testing documentation.
