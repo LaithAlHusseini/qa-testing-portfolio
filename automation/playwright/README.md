@@ -47,7 +47,21 @@ Tests are executed across:
 - Playwright
 - TypeScript
 - Node.js
+- Page Object Model (POM)
 - GitHub Actions
+
+## Test Architecture
+
+The automation project uses the Page Object Model (POM) pattern to separate page interactions from test scenarios.
+
+### Page Objects
+
+- `LoginPage.ts` — Login form interactions and authentication validations
+- `InventoryPage.ts` — Product and shopping cart interactions
+- `CartPage.ts` — Cart validation and checkout navigation
+- `CheckoutPage.ts` — Checkout form, overview, validation, and order completion
+
+This structure improves test readability, maintainability, and reusability.
 
 ## Run Tests Locally
 

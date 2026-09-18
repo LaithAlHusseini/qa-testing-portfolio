@@ -1,55 +1,41 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
 
 test.describe('Inventory and Shopping Cart Tests', () => {
+  let loginPage: LoginPage;
+  let inventoryPage: InventoryPage;
+  let cartPage: CartPage;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/');
+    loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
+    cartPage = new CartPage(page);
 
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
-
-    await expect(page).toHaveURL(/inventory/);
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
+    await inventoryPage.expectLoaded();
   });
 
-  test('user can add a product to the cart', async ({ page }) => {
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-backpack"]')
-      .click();
+  test('user can add a product to the cart', async () => {
+    await inventoryPage.addBackpackToCart();
 
-    await expect(
-      page.locator('[data-test="shopping-cart-badge"]')
-    ).toHaveText('1');
+    await inventoryPage.expectCartCount('1');
 
-    await page
-      .locator('[data-test="shopping-cart-link"]')
-      .click();
+    await inventoryPage.openCart();
 
-    await expect(page).toHaveURL(/cart\.html/);
-
-    await expect(
-      page.locator('[data-test="inventory-item-name"]', {
-        hasText: 'Sauce Labs Backpack'
-      })
-    ).toBeVisible();
+    await cartPage.expectLoaded();
+    await cartPage.expectBackpackVisible();
   });
 
-  test('user can remove a product from the cart', async ({ page }) => {
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-backpack"]')
-      .click();
+  test('user can remove a product from the cart', async () => {
+    await inventoryPage.addBackpackToCart();
 
-    await expect(
-      page.locator('[data-test="shopping-cart-badge"]')
-    ).toHaveText('1');
+    await inventoryPage.expectCartCount('1');
 
-    await page
-      .locator('[data-test="remove-sauce-labs-backpack"]')
-      .click();
+    await inventoryPage.removeBackpackFromCart();
 
-    await expect(
-      page.locator('[data-test="shopping-cart-badge"]')
-    ).toHaveCount(0);
+    await inventoryPage.expectCartEmpty();
   });
-
 });
