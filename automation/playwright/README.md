@@ -10,6 +10,14 @@ SauceDemo is used as a practice application for demonstrating UI test automation
 
 ## Current Test Coverage
 
+### Inventory & Shopping Cart
+
+- Add a product to the shopping cart
+- Validate the shopping cart badge
+- Verify the selected product appears in the cart
+- Remove a product from the shopping cart
+- Verify the cart badge disappears after removing the product
+
 ### Authentication
 
 - Successful login with valid credentials
