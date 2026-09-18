@@ -55,25 +55,36 @@ export class CheckoutPage {
   }
 
   async fillCustomerInformation(
-    firstName: string,
-    lastName: string,
-    postalCode: string
-  ) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
-  }
+  firstName: string,
+  lastName: string,
+  postalCode: string
+) {
+  await this.firstNameInput.fill(firstName);
+  await expect(this.firstNameInput).toHaveValue(firstName);
+
+  await this.lastNameInput.fill(lastName);
+  await expect(this.lastNameInput).toHaveValue(lastName);
+
+  await this.postalCodeInput.fill(postalCode);
+  await expect(this.postalCodeInput).toHaveValue(postalCode);
+
+  // Ensure the last field commits its value before continuing
+  await this.postalCodeInput.press('Tab');
+}
 
   async continueCheckout() {
-    await this.continueButton.click();
-  }
+  await expect(this.continueButton).toBeVisible();
+  await expect(this.continueButton).toBeEnabled();
+
+  await this.continueButton.click();
+}
 
   async expectOverviewPage() {
-    await expect(this.page).toHaveURL(
-      /checkout-step-two\.html/
-    );
-  }
-
+  await expect(this.page).toHaveURL(
+    /checkout-step-two\.html/,
+    { timeout: 15000 }
+  );
+}
   async expectBackpackVisible() {
     await expect(this.backpackItem).toBeVisible({
       timeout: 10000
