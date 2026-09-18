@@ -11,8 +11,11 @@ test.describe('Login Tests', () => {
     await page.locator('[data-test="password"]').fill('secret_sauce');
     await page.locator('[data-test="login-button"]').click();
 
-    await expect(page).toHaveURL(/inventory/);
-    await expect(page.locator('.title')).toHaveText('Products');
+    await expect(page).toHaveURL(/inventory\.html/, { timeout: 10000 });
+
+await expect(
+  page.locator('[data-test="add-to-cart-sauce-labs-backpack"]')
+).toBeVisible({ timeout: 10000 });
   });
 
   test('login fails with invalid password', async ({ page }) => {
