@@ -12,7 +12,7 @@ A practical software quality assurance portfolio demonstrating manual testing, t
 - Automated API response validations
 - End-to-end UI automation using Playwright and TypeScript
 - Cross-browser testing on Chromium, Firefox, and WebKit
-- 21 automated Playwright test executions across 3 browsers
+- 27 automated Playwright test executions across 3 browsers
 - Continuous Integration using GitHub Actions
 - Automated Playwright HTML report generation
 

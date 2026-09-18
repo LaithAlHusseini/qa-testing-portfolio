@@ -10,6 +10,14 @@ SauceDemo is used as a practice application for demonstrating UI test automation
 
 ## Current Test Coverage
 
+### Checkout
+
+- Complete checkout successfully with valid customer information
+- Verify checkout overview and selected product
+- Verify successful order confirmation
+- Validate required postal code
+- Prevent checkout when required information is missing
+
 ### Inventory & Shopping Cart
 
 - Add a product to the shopping cart
