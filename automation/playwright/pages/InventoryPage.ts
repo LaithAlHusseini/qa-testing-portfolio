@@ -2,13 +2,20 @@ import { Page, Locator, expect } from '@playwright/test';
 
 export class InventoryPage {
   readonly page: Page;
+
   readonly backpackAddButton: Locator;
   readonly backpackRemoveButton: Locator;
+
   readonly cartLink: Locator;
   readonly cartBadge: Locator;
+
   readonly sortDropdown: Locator;
   readonly productNames: Locator;
   readonly productPrices: Locator;
+
+  readonly menuButton: Locator;
+  readonly logoutLink: Locator;
+  readonly menuPanel: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -40,12 +47,25 @@ export class InventoryPage {
     this.productPrices = page.locator(
       '[data-test="inventory-item-price"]'
     );
+
+    this.menuButton = page.getByRole('button', {
+      name: 'Open Menu'
+    });
+
+    this.logoutLink = page.locator(
+      '[data-test="logout-sidebar-link"]'
+    );
+
+    this.menuPanel = page.locator('.bm-menu-wrap');
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/inventory\.html/, {
-      timeout: 10000
-    });
+    await expect(this.page).toHaveURL(
+      /inventory\.html/,
+      {
+        timeout: 10000
+      }
+    );
 
     await expect(this.sortDropdown).toBeVisible({
       timeout: 10000
@@ -74,6 +94,7 @@ export class InventoryPage {
 
   async sortBy(value: 'az' | 'za' | 'lohi' | 'hilo') {
     await this.sortDropdown.selectOption(value);
+
     await expect(this.sortDropdown).toHaveValue(value);
   }
 
@@ -98,24 +119,69 @@ export class InventoryPage {
   }
 
   async expectPricesSortedLowToHigh() {
-    const prices = (await this.productPrices.allTextContents())
-      .map(price => Number(price.replace('$', '')));
+    const prices = (
+      await this.productPrices.allTextContents()
+    ).map(price =>
+      Number(price.replace('$', ''))
+    );
 
-    const sortedPrices = [...prices].sort((a, b) => a - b);
+    const sortedPrices = [...prices].sort(
+      (a, b) => a - b
+    );
 
     expect(prices).toEqual(sortedPrices);
   }
 
   async expectPricesSortedHighToLow() {
-    const prices = (await this.productPrices.allTextContents())
-      .map(price => Number(price.replace('$', '')));
+    const prices = (
+      await this.productPrices.allTextContents()
+    ).map(price =>
+      Number(price.replace('$', ''))
+    );
 
-    const sortedPrices = [...prices].sort((a, b) => b - a);
+    const sortedPrices = [...prices].sort(
+      (a, b) => b - a
+    );
 
     expect(prices).toEqual(sortedPrices);
   }
+
   async reloadPage() {
-  await this.page.reload();
-  await this.expectLoaded();
-}
+    await this.page.reload();
+
+    await this.expectLoaded();
+  }
+
+  async openMenu() {
+    await this.menuButton.click();
+
+    await expect(this.menuPanel).toHaveAttribute(
+      'aria-hidden',
+      'false',
+      {
+        timeout: 10000
+      }
+    );
+
+    await expect(this.logoutLink).toHaveCount(1);
+  }
+
+  async logout() {
+    await this.openMenu();
+
+    await this.logoutLink.dispatchEvent('click');
+
+    await expect(this.page).toHaveURL(
+      'https://www.saucedemo.com/',
+      {
+        timeout: 10000
+      }
+    );
+  }
+
+  async goToInventoryDirectly() {
+    await this.page.goto(
+      'https://www.saucedemo.com/inventory.html'
+    );
+  }
 }

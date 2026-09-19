@@ -35,4 +35,14 @@ export class LoginPage {
   async expectError(message: string) {
     await expect(this.errorMessage).toContainText(message);
   }
+   async expectLoaded() {
+  await expect(this.page).toHaveURL(
+    'https://www.saucedemo.com/',
+    { timeout: 10000 }
+  );
+
+  await expect(this.loginButton).toBeVisible({
+    timeout: 10000
+  });
+}
 }
