@@ -55,10 +55,10 @@ test.describe('Inventory and Shopping Cart Tests', () => {
     await inventoryPage.sortBy('hilo');
     await inventoryPage.expectPricesSortedHighToLow();
   });
-test('shopping cart persists after page refresh', async ({
+  test('shopping cart persists after page refresh', async ({
   inventoryPage,
   cartPage
-}) => {
+  }) => {
   await inventoryPage.addBackpackToCart();
 
   await inventoryPage.expectCartCount('1');
@@ -71,5 +71,42 @@ test('shopping cart persists after page refresh', async ({
 
   await cartPage.expectLoaded();
   await cartPage.expectBackpackVisible();
-});
+   });
+
+ test('user can add multiple products to the cart', async ({
+  inventoryPage,
+  cartPage
+ }) => {
+  await inventoryPage.addBackpackToCart();
+  await inventoryPage.addBikeLightToCart();
+
+  await inventoryPage.expectCartCount('2');
+
+  await inventoryPage.openCart();
+
+  await cartPage.expectLoaded();
+  await cartPage.expectBackpackVisible();
+  await cartPage.expectBikeLightVisible();
+ });
+
+  test('user can remove a product from the cart page', async ({
+  inventoryPage,
+  cartPage
+ }) => {
+  await inventoryPage.addBackpackToCart();
+  await inventoryPage.addBikeLightToCart();
+
+  await inventoryPage.expectCartCount('2');
+
+  await inventoryPage.openCart();
+
+  await cartPage.expectLoaded();
+
+  await cartPage.removeBackpack();
+
+  await cartPage.expectBackpackRemoved();
+  await cartPage.expectBikeLightVisible();
+  await cartPage.expectCartCount('1');
+  });
+  
 });

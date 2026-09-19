@@ -17,11 +17,17 @@ export class InventoryPage {
   readonly logoutLink: Locator;
   readonly menuPanel: Locator;
 
+  readonly bikeLightAddButton: Locator;
+
   constructor(page: Page) {
     this.page = page;
 
     this.backpackAddButton = page.locator(
       '[data-test="add-to-cart-sauce-labs-backpack"]'
+    );
+
+    this.bikeLightAddButton = page.locator(
+      '[data-test="add-to-cart-sauce-labs-bike-light"]'
     );
 
     this.backpackRemoveButton = page.locator(
@@ -152,6 +158,10 @@ export class InventoryPage {
     await this.expectLoaded();
   }
 
+   async addBikeLightToCart() {
+     await this.bikeLightAddButton.click();
+  }
+  
   async openMenu() {
     await this.menuButton.click();
 
