@@ -39,5 +39,39 @@ test.describe('Checkout Tests', () => {
 
     await checkoutReadyPage.expectInformationPage();
   });
+  test('checkout fails when first name is missing', async ({
+  checkoutReadyPage
+  }) => {
+  await checkoutReadyPage.fillCustomerInformation(
+    '',
+    checkoutData.validCustomer.lastName,
+    checkoutData.validCustomer.postalCode
+  );
 
+   await checkoutReadyPage.continueCheckout();
+
+   await checkoutReadyPage.expectError(
+    'First Name is required'
+  );
+
+  await checkoutReadyPage.expectInformationPage();
+  });
+
+   test('checkout fails when last name is missing', async ({
+   checkoutReadyPage
+  }) => {
+   await checkoutReadyPage.fillCustomerInformation(
+    checkoutData.validCustomer.firstName,
+    '',
+    checkoutData.validCustomer.postalCode
+  );
+
+   await checkoutReadyPage.continueCheckout();
+
+  await checkoutReadyPage.expectError(
+    'Last Name is required'
+  );
+
+  await checkoutReadyPage.expectInformationPage();
+ });
 });
