@@ -18,12 +18,17 @@ export class InventoryPage {
   readonly menuButton: Locator;
   readonly logoutLink: Locator;
   readonly menuPanel: Locator;
+  readonly resetAppStateLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
 
     this.backpackAddButton = page.locator(
       '[data-test="add-to-cart-sauce-labs-backpack"]'
+    );
+
+    this.resetAppStateLink = page.locator(
+      '[data-test="reset-sidebar-link"]'
     );
 
     this.backpackRemoveButton = page.locator(
@@ -83,6 +88,14 @@ export class InventoryPage {
     await expect(this.sortDropdown).toBeVisible({
       timeout: 10000
     });
+  }
+
+  async resetAppState() {
+   await this.openMenu();
+
+   await expect(this.resetAppStateLink).toHaveCount(1);
+
+   await this.resetAppStateLink.dispatchEvent('click');
   }
 
   async addBackpackToCart() {

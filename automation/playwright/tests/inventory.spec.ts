@@ -127,5 +127,19 @@ test.describe('Inventory and Shopping Cart Tests', () => {
   await inventoryPage.expectLoaded();
   await inventoryPage.expectCartCount('1');
  });
+   test('user can reset application state', async ({
+  inventoryPage
+ }) => {
+  await inventoryPage.addBackpackToCart();
+  await inventoryPage.addBikeLightToCart();
+
+  await inventoryPage.expectCartCount('2');
+
+  await inventoryPage.resetAppState();
+
+  await inventoryPage.expectCartEmpty();
+
+  await inventoryPage.expectLoaded();
+ });
   
 });

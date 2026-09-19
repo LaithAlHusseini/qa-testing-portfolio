@@ -6,7 +6,7 @@ Automated end-to-end UI testing project built with Playwright and TypeScript as 
 
 [SauceDemo](https://www.saucedemo.com/)
 
-SauceDemo is used as a practice application for demonstrating UI test automation, cross-browser testing, session handling, authorization checks, shopping cart behavior, and checkout workflows.
+SauceDemo is used as a practice application for demonstrating UI test automation, cross-browser testing, authentication, authorization, session handling, shopping cart behavior, application state management, and checkout workflows.
 
 ## Current Test Coverage
 
@@ -67,7 +67,7 @@ SauceDemo is used as a practice application for demonstrating UI test automation
 The current automation suite contains:
 
 - 27 automated end-to-end test scenarios
-- 81 cross-browser Playwright test executions per full run
+- 81 cross-browser Playwright test executions per full regression run
 - Automated execution across Chromium, Firefox, and WebKit
 
 Each test scenario is executed against all three configured browser engines.
@@ -95,25 +95,25 @@ Tests are executed across:
 
 The automation project follows the Page Object Model pattern to separate test logic from page interactions and improve maintainability.
 
-Reusable Playwright fixtures are used to centralize common setup such as authentication and checkout preparation.
+Reusable Playwright fixtures centralize common setup such as authentication and checkout preparation.
 
 ### Page Objects
 
-- `LoginPage.ts` — Login interactions, authentication validation, and login page assertions
-- `InventoryPage.ts` — Inventory interactions, sorting, cart operations, product navigation, session actions, and application state management
+- `LoginPage.ts` — Authentication interactions and login validation
+- `InventoryPage.ts` — Inventory, sorting, cart operations, product navigation, session actions, and application state
 - `CartPage.ts` — Shopping cart validation, item removal, checkout navigation, and continue-shopping behavior
 - `ProductPage.ts` — Product detail validation and navigation
 - `CheckoutPage.ts` — Checkout form interactions, validation, overview checks, and order completion
 
 ### Fixtures
 
-Custom fixtures are used to provide reusable test states including:
+Custom fixtures provide reusable test states including:
 
 - Authenticated user session
 - Page Object instances
 - Checkout-ready application state
 
-This reduces duplicated setup code and keeps individual test scenarios focused on behavior and validation.
+This reduces duplicated setup code and keeps tests focused on behavior and assertions.
 
 ### Test Data
 
@@ -122,21 +122,25 @@ Reusable test data is separated from test logic for:
 - User credentials
 - Checkout customer information
 
-This makes the suite easier to maintain and extend.
-
 ## Reliability & Cross-Browser Handling
 
-The project includes several measures to improve test stability:
+The project includes several measures to improve test reliability:
 
 - Stable `data-test` selectors where available
-- Explicit URL and element-state assertions
+- Explicit URL and UI state assertions
 - Cross-browser execution
 - TypeScript static type checking
 - Controlled worker execution
-- CI retries for failed tests
-- Playwright traces on the first retry
-- Validation of application state after navigation and page refresh
-- Handling of browser-specific UI behavior where necessary
+- CI retries
+- Validation of application state after navigation and refresh
+- Browser-specific handling where required
+
+Failure diagnostics include:
+
+- Screenshots retained on failure
+- Videos retained on failure
+- Playwright traces retained on failure
+- HTML test reports
 
 ## Run Tests Locally
 
