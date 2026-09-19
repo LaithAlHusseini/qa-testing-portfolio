@@ -9,6 +9,7 @@ export class CartPage {
   readonly backpackRemoveButton: Locator;
   readonly cartBadge: Locator;
   readonly checkoutButton: Locator;
+  readonly continueShoppingButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -21,6 +22,9 @@ export class CartPage {
     this.bikeLightItem = page.locator(
       '[data-test="inventory-item-name"]',
       { hasText: 'Sauce Labs Bike Light' }
+    );
+    this.continueShoppingButton = page.locator(
+       '[data-test="continue-shopping"]'
     );
 
     this.backpackRemoveButton = page.locator(
@@ -65,6 +69,10 @@ export class CartPage {
 
   async expectCartCount(count: string) {
     await expect(this.cartBadge).toHaveText(count);
+  }
+  
+  async continueShopping() {
+   await this.continueShoppingButton.click();
   }
 
   async startCheckout() {

@@ -108,5 +108,24 @@ test.describe('Inventory and Shopping Cart Tests', () => {
   await cartPage.expectBikeLightVisible();
   await cartPage.expectCartCount('1');
   });
+
+  test('user can continue shopping from the cart', async ({
+  inventoryPage,
+  cartPage
+  }) => {
+  await inventoryPage.addBackpackToCart();
+
+  await inventoryPage.expectCartCount('1');
+
+  await inventoryPage.openCart();
+
+  await cartPage.expectLoaded();
+  await cartPage.expectBackpackVisible();
+
+  await cartPage.continueShopping();
+
+  await inventoryPage.expectLoaded();
+  await inventoryPage.expectCartCount('1');
+ });
   
 });
