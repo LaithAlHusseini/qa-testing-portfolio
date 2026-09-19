@@ -55,5 +55,21 @@ test.describe('Inventory and Shopping Cart Tests', () => {
     await inventoryPage.sortBy('hilo');
     await inventoryPage.expectPricesSortedHighToLow();
   });
+test('shopping cart persists after page refresh', async ({
+  inventoryPage,
+  cartPage
+}) => {
+  await inventoryPage.addBackpackToCart();
 
+  await inventoryPage.expectCartCount('1');
+
+  await inventoryPage.reloadPage();
+
+  await inventoryPage.expectCartCount('1');
+
+  await inventoryPage.openCart();
+
+  await cartPage.expectLoaded();
+  await cartPage.expectBackpackVisible();
+});
 });

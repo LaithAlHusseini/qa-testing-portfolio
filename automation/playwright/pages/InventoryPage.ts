@@ -47,7 +47,7 @@ export class InventoryPage {
       timeout: 10000
     });
 
-    await expect(this.backpackAddButton).toBeVisible({
+    await expect(this.sortDropdown).toBeVisible({
       timeout: 10000
     });
   }
@@ -114,4 +114,8 @@ export class InventoryPage {
 
     expect(prices).toEqual(sortedPrices);
   }
+  async reloadPage() {
+  await this.page.reload();
+  await this.expectLoaded();
+}
 }

@@ -49,10 +49,27 @@ export class CheckoutPage {
   }
 
   async expectInformationPage() {
-    await expect(this.page).toHaveURL(
-      /checkout-step-one\.html/
-    );
-  }
+  await expect(this.page).toHaveURL(
+    /checkout-step-one\.html/,
+    { timeout: 15000 }
+  );
+
+  await expect(this.firstNameInput).toBeVisible({
+    timeout: 10000
+  });
+
+  await expect(this.lastNameInput).toBeVisible({
+    timeout: 10000
+  });
+
+  await expect(this.postalCodeInput).toBeVisible({
+    timeout: 10000
+  });
+
+  await expect(this.continueButton).toBeVisible({
+    timeout: 10000
+  });
+}
 
   async fillCustomerInformation(
   firstName: string,
