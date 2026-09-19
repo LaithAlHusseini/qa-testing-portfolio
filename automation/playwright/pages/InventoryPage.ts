@@ -6,6 +6,9 @@ export class InventoryPage {
   readonly backpackRemoveButton: Locator;
   readonly cartLink: Locator;
   readonly cartBadge: Locator;
+  readonly sortDropdown: Locator;
+  readonly productNames: Locator;
+  readonly productPrices: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -24,6 +27,18 @@ export class InventoryPage {
 
     this.cartBadge = page.locator(
       '[data-test="shopping-cart-badge"]'
+    );
+
+    this.sortDropdown = page.locator(
+      '[data-test="product-sort-container"]'
+    );
+
+    this.productNames = page.locator(
+      '[data-test="inventory-item-name"]'
+    );
+
+    this.productPrices = page.locator(
+      '[data-test="inventory-item-price"]'
     );
   }
 
@@ -55,5 +70,48 @@ export class InventoryPage {
 
   async expectCartEmpty() {
     await expect(this.cartBadge).toHaveCount(0);
+  }
+
+  async sortBy(value: 'az' | 'za' | 'lohi' | 'hilo') {
+    await this.sortDropdown.selectOption(value);
+    await expect(this.sortDropdown).toHaveValue(value);
+  }
+
+  async expectNamesSortedAscending() {
+    const names = await this.productNames.allTextContents();
+
+    const sortedNames = [...names].sort((a, b) =>
+      a.localeCompare(b)
+    );
+
+    expect(names).toEqual(sortedNames);
+  }
+
+  async expectNamesSortedDescending() {
+    const names = await this.productNames.allTextContents();
+
+    const sortedNames = [...names].sort((a, b) =>
+      b.localeCompare(a)
+    );
+
+    expect(names).toEqual(sortedNames);
+  }
+
+  async expectPricesSortedLowToHigh() {
+    const prices = (await this.productPrices.allTextContents())
+      .map(price => Number(price.replace('$', '')));
+
+    const sortedPrices = [...prices].sort((a, b) => a - b);
+
+    expect(prices).toEqual(sortedPrices);
+  }
+
+  async expectPricesSortedHighToLow() {
+    const prices = (await this.productPrices.allTextContents())
+      .map(price => Number(price.replace('$', '')));
+
+    const sortedPrices = [...prices].sort((a, b) => b - a);
+
+    expect(prices).toEqual(sortedPrices);
   }
 }

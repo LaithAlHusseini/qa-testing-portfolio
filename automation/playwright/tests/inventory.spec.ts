@@ -1,21 +1,6 @@
 import { test } from '../fixtures/testFixtures';
-import { users } from '../test-data/users';
 
 test.describe('Inventory and Shopping Cart Tests', () => {
-
-  test.beforeEach(async ({
-    loginPage,
-    inventoryPage
-  }) => {
-    await loginPage.goto();
-
-    await loginPage.login(
-      users.standard.username,
-      users.standard.password
-    );
-
-    await inventoryPage.expectLoaded();
-  });
 
   test('user can add a product to the cart', async ({
     inventoryPage,
@@ -41,6 +26,34 @@ test.describe('Inventory and Shopping Cart Tests', () => {
     await inventoryPage.removeBackpackFromCart();
 
     await inventoryPage.expectCartEmpty();
+  });
+
+  test('user can sort products by name A to Z', async ({
+    inventoryPage
+  }) => {
+    await inventoryPage.sortBy('az');
+    await inventoryPage.expectNamesSortedAscending();
+  });
+
+  test('user can sort products by name Z to A', async ({
+    inventoryPage
+  }) => {
+    await inventoryPage.sortBy('za');
+    await inventoryPage.expectNamesSortedDescending();
+  });
+
+  test('user can sort products by price low to high', async ({
+    inventoryPage
+  }) => {
+    await inventoryPage.sortBy('lohi');
+    await inventoryPage.expectPricesSortedLowToHigh();
+  });
+
+  test('user can sort products by price high to low', async ({
+    inventoryPage
+  }) => {
+    await inventoryPage.sortBy('hilo');
+    await inventoryPage.expectPricesSortedHighToLow();
   });
 
 });
