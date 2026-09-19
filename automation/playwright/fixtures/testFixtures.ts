@@ -9,6 +9,7 @@ import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { users } from '../test-data/users';
+import { ProductPage } from '../pages/ProductPage';
 
 type TestFixtures = {
   loginPage: LoginPage;
@@ -17,6 +18,7 @@ type TestFixtures = {
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
   checkoutReadyPage: CheckoutPage;
+  productPage: ProductPage;
 };
 
 export const test = base.extend<TestFixtures>({
@@ -24,6 +26,12 @@ export const test = base.extend<TestFixtures>({
   // Used by login tests without authentication
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
+  },
+   
+  productPage: async ({ authenticatedPage }, use) => {
+  await use(
+    new ProductPage(authenticatedPage)
+  );
   },
 
   // Automatically logs in standard user

@@ -5,6 +5,8 @@ export class InventoryPage {
 
   readonly backpackAddButton: Locator;
   readonly backpackRemoveButton: Locator;
+  readonly backpackName: Locator;
+  readonly bikeLightAddButton: Locator;
 
   readonly cartLink: Locator;
   readonly cartBadge: Locator;
@@ -17,8 +19,6 @@ export class InventoryPage {
   readonly logoutLink: Locator;
   readonly menuPanel: Locator;
 
-  readonly bikeLightAddButton: Locator;
-
   constructor(page: Page) {
     this.page = page;
 
@@ -26,12 +26,17 @@ export class InventoryPage {
       '[data-test="add-to-cart-sauce-labs-backpack"]'
     );
 
-    this.bikeLightAddButton = page.locator(
-      '[data-test="add-to-cart-sauce-labs-bike-light"]'
-    );
-
     this.backpackRemoveButton = page.locator(
       '[data-test="remove-sauce-labs-backpack"]'
+    );
+
+    this.backpackName = page.locator(
+      '[data-test="inventory-item-name"]',
+      { hasText: 'Sauce Labs Backpack' }
+    );
+
+    this.bikeLightAddButton = page.locator(
+      '[data-test="add-to-cart-sauce-labs-bike-light"]'
     );
 
     this.cartLink = page.locator(
@@ -62,7 +67,9 @@ export class InventoryPage {
       '[data-test="logout-sidebar-link"]'
     );
 
-    this.menuPanel = page.locator('.bm-menu-wrap');
+    this.menuPanel = page.locator(
+      '.bm-menu-wrap'
+    );
   }
 
   async expectLoaded() {
@@ -84,6 +91,14 @@ export class InventoryPage {
 
   async removeBackpackFromCart() {
     await this.backpackRemoveButton.click();
+  }
+
+  async addBikeLightToCart() {
+    await this.bikeLightAddButton.click();
+  }
+
+  async openBackpackDetails() {
+    await this.backpackName.click();
   }
 
   async openCart() {
@@ -158,10 +173,6 @@ export class InventoryPage {
     await this.expectLoaded();
   }
 
-   async addBikeLightToCart() {
-     await this.bikeLightAddButton.click();
-  }
-  
   async openMenu() {
     await this.menuButton.click();
 
