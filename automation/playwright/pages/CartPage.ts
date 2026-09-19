@@ -70,6 +70,12 @@ export class CartPage {
   async expectCartCount(count: string) {
     await expect(this.cartBadge).toHaveText(count);
   }
+
+  async goToCartDirectly() {
+   await this.page.goto(
+    'https://www.saucedemo.com/cart.html'
+  );
+  }
   
   async continueShopping() {
    await this.continueShoppingButton.click();

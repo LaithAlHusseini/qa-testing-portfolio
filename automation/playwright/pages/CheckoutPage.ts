@@ -96,6 +96,12 @@ export class CheckoutPage {
   await this.continueButton.click();
 }
 
+  async goToCheckoutDirectly() {
+   await this.page.goto(
+    'https://www.saucedemo.com/checkout-step-one.html'
+  );
+}
+
   async expectOverviewPage() {
   await expect(this.page).toHaveURL(
     /checkout-step-two\.html/,

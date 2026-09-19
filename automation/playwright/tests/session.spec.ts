@@ -36,4 +36,40 @@ test.describe('Logout and Session Tests', () => {
     await inventoryPage.expectLoaded();
   });
 
+  test('logged out user cannot access cart directly', async ({
+  inventoryPage,
+  cartPage,
+  loginPage
+  }) => {
+  await inventoryPage.logout();
+
+  await loginPage.expectLoaded();
+
+  await cartPage.goToCartDirectly();
+
+  await loginPage.expectLoaded();
+
+  await loginPage.expectError(
+    "You can only access '/cart.html' when you are logged in."
+  );
+  });
+
+  test('logged out user cannot access checkout directly', async ({
+  inventoryPage,
+  checkoutPage,
+  loginPage
+  }) => {
+  await inventoryPage.logout();
+
+  await loginPage.expectLoaded();
+
+  await checkoutPage.goToCheckoutDirectly();
+
+  await loginPage.expectLoaded();
+
+  await loginPage.expectError(
+    "You can only access '/checkout-step-one.html' when you are logged in."
+  );
+ });
+
 });
