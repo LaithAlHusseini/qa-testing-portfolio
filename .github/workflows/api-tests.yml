@@ -1,0 +1,32 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: api-testing
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api-testing/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Postman API tests with Newman
+        run: npm test

@@ -1,0 +1,16 @@
+{
+  "name": "api-testing",
+  "version": "1.0.0",
+  "description": "This section demonstrates practical REST API testing using Postman.",
+  "main": "index.js",
+  "scripts": {
+    "test": "newman run \"postman/QA Testing Portfolio - JSONPlaceholder.postman_collection.json\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "newman": "^6.2.1"
+  }
+}
