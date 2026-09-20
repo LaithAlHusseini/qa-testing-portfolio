@@ -2,6 +2,8 @@
 
 [![Playwright Tests](https://github.com/LaithAlHusseini/qa-testing-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/LaithAlHusseini/qa-testing-portfolio/actions/workflows/playwright.yml)
 
+[![API Tests](https://github.com/LaithAlHusseini/qa-testing-portfolio/actions/workflows/api-tests.yml/badge.svg)](https://github.com/LaithAlHusseini/qa-testing-portfolio/actions/workflows/api-tests.yml)
+
 A practical Software Quality Assurance portfolio demonstrating manual testing, test planning, test design, defect reporting, API testing, and end-to-end test automation.
 
 ## Portfolio Highlights
@@ -22,6 +24,8 @@ A practical Software Quality Assurance portfolio demonstrating manual testing, t
 - TypeScript static type checking
 - Continuous Integration using GitHub Actions
 - Automated Playwright HTML report generation
+- Automated Postman collection execution using Newman
+- API regression testing integrated with GitHub Actions CI
 - Screenshots, videos, and traces retained for failed automated tests
 
 ## Repository Structure
@@ -118,13 +122,16 @@ See:
 
 ### API Testing
 
-- REST API testing
-- Postman collections
-- Request and response validation
+- REST API testing using Postman
+- JSONPlaceholder API coverage
+- GET, POST, PUT, and DELETE requests
 - HTTP status code validation
-- JSON property validation
-- Automated API assertions
-- CRUD operation testing
+- Response data type validation
+- Required JSON property validation
+- Automated Postman assertions
+- Newman command-line execution
+- Automated API regression testing through GitHub Actions
+- 5 API requests and 20 automated assertions per collection run
 
 See:
 

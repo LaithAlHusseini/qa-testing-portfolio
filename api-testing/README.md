@@ -1,12 +1,12 @@
 # API Testing
 
-This section demonstrates practical REST API testing using Postman.
+REST API testing project built with Postman and Newman as part of the QA Testing Portfolio.
 
 ## API Under Test
 
 [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
 
-JSONPlaceholder is a fake REST API used for testing and prototyping.
+JSONPlaceholder is a fake REST API designed for testing and prototyping.
 
 ## Test Coverage
 
@@ -20,27 +20,34 @@ The Postman collection currently covers:
 
 ## Automated Validations
 
-Postman test scripts validate:
+The collection contains automated assertions for:
 
 - HTTP status codes
 - Response data types
 - Required JSON properties
 - Resource IDs
 - Non-empty response values
-- Create response data
-- Update response data
+- Create response validation
+- Update response validation
 - DELETE response structure
+
+A complete collection run currently executes:
+
+- 5 API requests
+- 5 test scripts
+- 20 automated assertions
 
 ## Postman Collection
 
-The exported collection is available here:
+The exported Postman collection is available in:
 
 [`postman/`](./postman/)
 
-It can be imported directly into Postman and executed locally.
+## Newman CLI
 
-## Notes
+The Postman collection can also be executed from the command line using Newman.
 
-JSONPlaceholder simulates POST, PUT, and DELETE operations.
+Install dependencies:
 
-These requests return realistic responses but do not permanently modify server data.
+```bash
+npm ci
